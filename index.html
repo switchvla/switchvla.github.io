@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+  video {
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  </style>
+  <meta charset="utf-8">
+  <title>SwitchVLA: Execution-Aware Task Switching for Vision-Language-Action Models</title>
+  <meta name="description" content="SwitchVLA: Execution-Aware Task Switching for Vision-Language-Action Models">
+  <meta name="keywords" content="SwitchVLA">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="SwitchVLA: Execution-Aware Task Switching for Vision-Language-Action Models">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SwitchVLA: Execution-Aware Task Switching for Vision-Language-Action Models">
+  
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/icon.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  
+</head>
+
+<body>
+  
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <h1 class="title is-1 publication-title" style="margin-bottom: 0.5rem;">SwitchVLA</h1>
+            <h2 class="subtitle is-3" style="margin-top: 0; font-weight: 600; white-space: nowrap;">Execution-Aware Task Switching for Vision-Language-Action Models</h2>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                Meng Li<sup>*,1</sup>,
+              </span>
+              <span class="author-block">
+                Zhen Zhao<sup>*,1</sup>,
+              </span>
+              <span class="author-block">
+                Zhengping Che<sup>*,1</sup>,
+              </span>
+              <span class="author-block">
+                Fei Liao<sup>1</sup>,
+              </span>
+              <br>
+              <span class="author-block">
+                Kun Wu<sup>1</sup>,
+              </span>
+              <span class="author-block">
+                Zhiyuan Xu<sup>1</sup>,
+              </span>
+              <span class="author-block">
+                Pei Ren<sup>1</sup>,
+              </span>
+              <span class="author-block">
+                Zhao Jin<sup>1</sup>,
+              </span>
+              <!-- <br> -->
+              <span class="author-block">
+                Ning Liu<sup>1</sup>,
+              </span>
+              <span class="author-block">
+                Jian Tang<sup>1</sup>,
+              </span>
+              <!-- <span class="author-block">
+                <a href="https://aicenter.stanford.edu/people/thomas-kollar">Thomas Kollar</a><sup>3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.benburchfiel.com/">Benjamin Burchfiel</a><sup>3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://groups.csail.mit.edu/locomotion/russt.html">Russ Tedrake</a><sup>3,6</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://dorsa.fyi/">Dorsa Sadigh</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://people.eecs.berkeley.edu/~svlevine/">Sergey Levine</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://cs.stanford.edu/~pliang/">Percy Liang</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://ai.stanford.edu/~cbfinn/">Chelsea Finn</a><sup>1</sup>,
+              </span> -->
+            </div>
+
+            
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup><font size="-0.4">*</font></sup><font size="-0.4">Equal contribution</font></span><br>
+              <span class="author-block"><sup>1</sup>Beijing Innovation Center of Humanoid Robotics,</span>
+              <!-- <span class="author-block"><sup>2</sup>UC Berkeley,</span> -->
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <!-- Video Link. -->
+                <!-- <span class="link-block">
+                  <a href="" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span> -->
+                <!-- Code Link. -->
+                <!-- <span class="link-block">
+                  <a href="" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span> -->
+                <!-- Model Link. -->
+                <!-- <span class="link-block">
+                  <a href="" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <img src="static/images/hf_icon.svg">
+                    </span>
+                    <span>Models</span>
+                  </a>
+                </span> -->
+                <!-- CoLab Link. -->
+                <!-- <span class="link-block">
+                  <a href=""
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <img src="static/images/colab_icon.png" />
+                    </span>
+                    <span>Let's try it!</span>
+                  </a>
+                </span> -->
+
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" autoplay controls muted loop playsinline width="118%">
+        <source src="static/videos/teaser.webm"
+                type="video/mp4">
+      </video>
+
+        <h2 class="subtitle has-text-centered">
+          We introduce <strong>SwitchVLA</strong>, a unified execution-aware framework for Vision-Language-Action (VLA) robots.
+          By conditioning action generation on both task language and fine-grained execution signals, SwitchVLA enables seamless transitions across forward, rollback, and advance behaviors—without relying on modular planners or handcrafted switching logic.
+
+          SwitchVLA serves as a more generalizable solution for instruction-conditioned control—capable of unifying diverse switching behaviors within a single policy framework.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item item-steve has-text-centered">
+            <video poster="" id="steve video" autoplay controls muted loop playsinline height="300" style="object-fit: cover">
+              <source src="static/videos/sliding/01-cabinet-coke.webm" type="video/mp4">
+            </video>
+            <p id="overlay">01-cabinet-coke</p>
+          </div>
+          <div class="item item-fullbody has-text-centered">
+            <video poster="" id="fullbody video" autoplay controls muted loop playsinline height="300" style="object-fit: cover">
+              <source src="static/videos/sliding/03-plate-tissue.webm" type="video/mp4">
+            </video>
+            <p id="overlay">03-plate-tissue</p>
+          </div>
+          <div class="item item-fullbody has-text-centered">
+            <video poster="" id="sim1 video" autoplay controls muted loop playsinline height="300" style="object-fit: cover">
+              <source src="static/videos/sliding/sim1-bowl-stove.webm" type="video/mp4">
+            </video>
+            <p id="overlay">sim1</p>
+          </div>
+          <div class="item item-chair-tp has-text-centered">
+            <video poster="" id="chair-tp video" autoplay controls muted loop playsinline height="300" style="object-fit: cover">
+              <source src="static/videos/sliding/01-coke-lemon.webm" type="video/mp4">
+            </video>
+            <p id="overlay">01-coke-lemon</p>
+          </div>
+          <div class="item item-shiba has-text-centered">
+            <video poster="" id="shiba video" autoplay controls muted loop playsinline height="300" style="object-fit: cover">
+              <source src="static/videos/sliding/03-sandwich-plate.webm" type="video/mp4">
+            </video>
+            <p id="overlay">03-sandwich-plate</p>
+          </div>
+          <div class="item item-fullbody has-text-centered">
+            <video poster="" id="sim2 video" autoplay controls muted loop playsinline height="300" style="object-fit: cover">
+              <source src="static/videos/sliding/sim2-wine-stove.webm" type="video/mp4">
+            </video>
+            <p id="overlay">sim2</p>
+          </div>
+          <div class="item item-chair-tp has-text-centered">
+            <video poster="" id="chair-tp video" autoplay controls muted loop playsinline height="300" style="object-fit: cover">
+              <source src="static/videos/sliding/01-lemon-coke.webm" type="video/mp4">
+            </video>
+            <p id="overlay">01-lemon-coke</p>
+          </div>
+          <div class="item item-fullbody has-text-centered">
+            <video poster="" id="fullbody video" autoplay controls muted loop playsinline height="300" style="object-fit: cover">
+              <source src="static/videos/sliding/03-tissue-gum.webm" type="video/mp4">
+            </video>
+            <p id="overlay">03-tissue-gum</p>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">(Task switch evaluation videos of SwitchVLA)</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- <section class="section">
+    <div class="container is-max-desktop">
+    </div>
+  </section> -->
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered"> 
+        <div class="column is-full-width">
+          <h2 class="title is-3">The SwitchVLA Policy</h2>
+          <div class="content has-text-justified has-text-centered">
+            <img src="static/images/SwitchVLA-framework.jpg" />
+            <p>
+              SwitchVLA establishes a unified architecture for robust and instruction-consistent task execution. 
+              The architecture consists of two core components: 
+              (i) <strong>Visual-Language-Contact (VLC) Embedding Module</strong> encodes visual, language, and contact cues into unified representations. 
+              (ii) <strong>Conditional Execution Expert</strong> decodes behavior-aware actions conditioned on the current multimodal embedding.
+            </p>
+            <p>
+              The real-robot dataset was collected via <strong> human teleoperation on two dual-armed Franka Emika Panda workstations </strong>. 
+              For each trajectory, recordings include data from two wrist-mounted cameras, one third-person RGB camera, 
+              and the robots’ proprioceptive state sensors. The simulation dataset is drawn from the <strong> LIBERO benchmark’s simulation task suite GOAL </strong>.
+            </p>
+            <img src="static/images/all_setups.png" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+      <section class="section">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column is-full-width">
+                <h2 class="title is-3">Experiments</h2>
+
+                <h3 class="title is-4">Tasks Switch Evaluations on Robot Platforms</h3>
+                <img src="static/images/task_switch.jpg" /> 
+                <div class="content has-text-justified">
+
+                  <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <p>
+                        Task switching occurs when the execution of <strong> Task A </strong> is interrupted upon receipt of a new instruction
+                        for <strong> Task B </strong>. Based on this, we perform two types of task switching experiments: pairwise evaluation
+                        and long sequence evaluation. To facilitate a comprehensive evaluation of the model’s capabilities,
+                        in pairwise experiments, we send new instruction at different execution phases: <strong> early (pre-contact) </strong>,
+                        <strong> mid (in-contact) </strong>, and <strong> late (post-action) </strong>. We evaluate SwitchVLA against three prior manipulation policies and selected
+                        the more representative real-robot works: <strong> MT-ACT</strong>, <strong> Diffusion Policy (DP)</strong>, and <strong>π0</strong>.
+                      </p>
+                    </tr>
+                  </table>
+                  <img src="static/images/real_compare_table.png" />
+                </div>
+              <br>
+              
+              <br>
+              <h3 class="title is-4">SwitchVLA Long Sequence Task Switching</h2>
+                <div class="content has-text-justified">
+                  <p>
+                    The following videos showcase the SwitchVLA long sequence switching performance on real-world and simulation platforms. 
+                    <!-- (Playback speed: 3.0x.) -->
+                  </p>
+                </div>
+                <h4 class="title is-5">Real-World Workstation 1</h4>
+                <div class="has-text-centered">
+                  <h5>pick up lemon place on plate&#8594pick up cookie place on plate&#8594pick up coke bottle place on plate&#8594pick up lemon place on plate&#8594pick up coke bottle place on plate&#8594slide open upper cabinet</h5>
+                  <video autoplay controls muted loop playsinline width="60%">
+                    <source src="static/videos/Compar/franka01/franka_01-multi_tasks/franka_01-multi_tasks.webm" type="video/mp4">
+                  </video>
+                </div>
+                <br>
+                <h4 class="title is-5">Real-World Workstation 2</h4>
+                <div class="has-text-centered">
+                  <h5>pick up red gum place on plate&#8594pick up sandwich place on plate&#8594push plate to customer&#8594pick up tissue place on plate&#8594pick up sandwich place on plate&#8594pick up red gum place on plate</h5>
+                  <video autoplay controls muted loop playsinline width="60%">
+                    <source src="static/videos/Compar/franka03/franka03-multi_tasks/franka03-multi_tasks.webm" type="video/mp4">
+                  </video>
+                </div>
+                <br>
+                <h4 class="title is-5">Simulation</h4>
+                <div class="has-text-centered">
+                  <h5>put the cream cheese in the bowl&#8594put the wine bottle on top of the cabinet&#8594put the bowl on the stove&#8594put the bowl on the plate&#8594put the bowl on top of the cabinet&#8594turn on the stove</h5>
+                  <video autoplay controls muted loop playsinline width="40%">
+                    <source src="static/videos/Compar/sim/4_multi_task/multi_task_switch.webm" type="video/mp4">
+                  </video>
+                </div>
+                <br><br><br><br>
+                <h3 class="title is-4">Pairwise Task Switching Comparisons with State-of-the-Art Models</h2>
+                  <div class="content has-text-justified">
+                    <p>
+                      In real-world experiments, We evaluate SwitchVLA against MT-ACT, Diffusion Policy (DP), and π0. π0 is a re-implementation based on the original paper.
+                    </p>
+                    <p>
+                      For simulation, we compare SwitchVLA with π0 and OpenVLA-OFT.
+                    </p>
+                  </div>
+                
+                <h4 class="title is-5">Workstation 1</h4>
+
+                <div class="content has-text-justified">
+                  <p><strong>Mid-Switch:</strong> pick up coke bottle place on plate &#8594 pick up lemon place on plate</p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                  <div class="column  has-text-centered">
+                    <h5><b> SwitchVLA</b></h5>
+                    <h5 style="font-size:30px;">✅</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka01/'pick up coke bottle place on plate''pick up lemon place on plate-mid/success-SwitchVLA.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>Diffusion Policy (DP)</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka01/'pick up coke bottle place on plate''pick up lemon place on plate-mid/failure-DP.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>MT-ACT</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka01/'pick up coke bottle place on plate''pick up lemon place on plate-mid/failure-MT-ACT.webm" type="video/mp4">
+                    </video>
+                  </div>
+                </div>               
+                
+              
+                <div class="content has-text-justified">
+                  <p><strong>Late-Switch: </strong>pick up cookie place on plate &#8594 pick up lemon place on plate</p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                  <div class="column  has-text-centered">
+                    <h5><b> SwitchVLA</b></h5>
+                    <h5 style="font-size:30px;">✅</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka01/'pick up cookie place on plate' 'pick up lemon place on plate-late/success-SwitchVLA.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>Diffusion Policy (DP)</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka01/'pick up cookie place on plate' 'pick up lemon place on plate-late/failure-DP.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>π0</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka01/'pick up cookie place on plate' 'pick up lemon place on plate-late/failure-pi0.webm" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+
+
+                <div class="content has-text-justified">
+                  <p> <strong>Mid-Switch:</strong> slide open upper cabinet &#8594 pick up coke bottle place on plate</p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                  <div class="column  has-text-centered">
+                    <h5><b> SwitchVLA</b></h5>
+                    <h5 style="font-size:30px;">✅</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka01/'slide open upper cabinet''pick up coke bottle place on plate-mid/success-SwitchVLA.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>Diffusion Policy (DP)</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka01/'slide open upper cabinet''pick up coke bottle place on plate-mid/failure-DP.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>π0</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka01/'slide open upper cabinet''pick up coke bottle place on plate-mid/failure-Pi0.webm" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+
+                <div class="content has-text-justified">
+                  <p> <strong> Early-Switch:</strong> pick up lemon place on plate &#8594 pick up coke bottle place on plate</p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                  <div class="column  has-text-centered">
+                    <h5><b> SwitchVLA</b></h5>
+                    <h5 style="font-size:30px;">✅</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka01/'pick up lemon place on plate'pick up coke bottle place on plate-early/success-SwitchVLA.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>Diffusion Policy (DP)</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka01/'pick up lemon place on plate'pick up coke bottle place on plate-early/failure-DP.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>MT-ACT</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka01/'pick up lemon place on plate'pick up coke bottle place on plate-early/failure-MT-ACT.webm" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+
+
+                <br><br><br>
+                <h4 class="title is-5">Workstation 2</h4>
+                <div class="content has-text-justified">
+                  <p> <strong>Mid-Switch:</strong> pick up sandwich place on plate &#8594 push plate to customer</p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                  <div class="column  has-text-centered">
+                    <h5><b> SwitchVLA</b></h5>
+                    <h5 style="font-size:30px;">✅</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka03/pick up sandwich place on platepush plate to customer-mid/success-SwitchVLA.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>Diffusion Policy (DP)</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka03/pick up sandwich place on platepush plate to customer-mid/failure-DP.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>MT-ACT</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka03/pick up sandwich place on platepush plate to customer-mid/failure-MT-ACT.webm" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+
+                <div class="content has-text-justified">
+                  <p> <strong>Early-Switch:</strong> pick up tissue place on plate &#8594 pick up red gum place on plate  </p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                  <div class="column  has-text-centered">
+                    <h5><b> SwitchVLA</b></h5>
+                    <h5 style="font-size:30px;">✅</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka03/pick up tissue place on plate- pick up red gum place on plate-early/success-SwitchVLA.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>Diffusion Policy (DP)</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka03/pick up tissue place on plate- pick up red gum place on plate-early/failure-DP.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>MT-ACT</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka03/pick up tissue place on plate- pick up red gum place on plate-early/failure-MT-ACT.webm" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+                
+
+                <div class="content has-text-justified">
+                  <p><strong>Mid-Switch:</strong> push plate to customer &#8594 pick up tissue place on plate </p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                  <div class="column  has-text-centered">
+                    <h5><b> SwitchVLA</b></h5>
+                    <h5 style="font-size:30px;">✅</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka03/push plate to customer pick up tissue place on plate-mid/success-SwitchVLA.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>π0</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka03/push plate to customer pick up tissue place on plate-mid/failure-pi0.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>MT-ACT</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka03/push plate to customer pick up tissue place on plate-mid/failure-MT-ACT.webm" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+
+
+                <div class="content has-text-justified">
+                  <p> <strong>Late-Switch:</strong> pick up red gum place on plate &#8594 push plate to customer </p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                  <div class="column  has-text-centered">
+                    <h5><b> SwitchVLA</b></h5>
+                    <h5 style="font-size:30px;">✅</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka03/pick up red gum place on plate-push plate to customer-late/success-SwitchVLA.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>DP</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka03/pick up red gum place on plate-push plate to customer-late/failure-DP.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>MT-ACT</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/franka03/pick up red gum place on plate-push plate to customer-late/failure-ACT.webm" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+
+                <br><br><br>
+                <h4 class="title is-5">Simulation</h4>
+
+                <div class="content has-text-justified">
+                  <p> <strong>Mid-Switch:</strong> put the bowl on the plate &#8594 turn on the stove  </p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                  <div class="column  has-text-centered">
+                    <h5><b> SwitchVLA</b></h5>
+                    <h5 style="font-size:30px;">✅</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/1_'put the bowl on the plate'_'turn on the stove'/mid/SwitchVLA_success.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>Openvla-oft</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/1_'put the bowl on the plate'_'turn on the stove'/mid/openvla_failure.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>π0</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/1_'put the bowl on the plate'_'turn on the stove'/mid/openpi_failure.webm" type="video/mp4">
+                    </video>
+                  </div>
+                </div>      
+                
+
+                <div class="content has-text-justified">
+                  <p> <strong>Late-Switch:</strong> put the bowl on top of the cabinet &#8594 turn on the stove </p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                  <div class="column  has-text-centered">
+                    <h5><b> SwitchVLA</b></h5>
+                    <h5 style="font-size:30px;">✅</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/3_'put the bowl on top of the cabinet'_'turn on the stove'/late/SwitchVLA_success.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>Openvla-oft</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/3_'put the bowl on top of the cabinet'_'turn on the stove'/late/openvla_failure.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>π0</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/3_'put the bowl on top of the cabinet'_'turn on the stove'/late/openpi_failure.webm" type="video/mp4">
+                    </video>
+                  </div>
+                </div>   
+
+
+                <div class="content has-text-justified">
+                  <p> <strong>Mid-Switch:</strong> put the wine bottle on top of the cabinet &#8594 turn on the stove  </p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                  <div class="column  has-text-centered">
+                    <h5><b> SwitchVLA</b></h5>
+                    <h5 style="font-size:30px;">✅</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/2_'put the wine bottle on top of the cabinet'_'turn on the stove'/mid/SwitchVLA_mid.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>Openvla-oft</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/2_'put the wine bottle on top of the cabinet'_'turn on the stove'/mid/openvla_failure.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>π0</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/2_'put the wine bottle on top of the cabinet'_'turn on the stove'/mid/openpi_failure.webm" type="video/mp4">
+                    </video>
+                  </div>
+                </div>   
+
+
+                <div class="content has-text-justified">
+                  <p> <strong>Mid-Switch:</strong> put the bowl on top of the cabinet &#8594 turn on the stove  </p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                  <div class="column  has-text-centered">
+                    <h5><b> SwitchVLA</b></h5>
+                    <h5 style="font-size:30px;">✅</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/3_'put the bowl on top of the cabinet'_'turn on the stove'/mid/SwitchVLA_success.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>Openvla-oft</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/3_'put the bowl on top of the cabinet'_'turn on the stove'/mid/openvla_failure.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>π0</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/3_'put the bowl on top of the cabinet'_'turn on the stove'/mid/openpi_failure.webm" type="video/mp4">
+                    </video>
+                  </div>
+                </div>   
+
+
+                <div class="content has-text-justified">
+                  <p> <strong>Late-Switch:</strong> put the bowl on the plate &#8594 turn on the stove </p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                  <div class="column  has-text-centered">
+                    <h5><b> SwitchVLA</b></h5>
+                    <h5 style="font-size:30px;">✅</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/1_'put the bowl on the plate'_'turn on the stove'/late/SwitchVLA_success.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>Openvla-oft</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/1_'put the bowl on the plate'_'turn on the stove'/late/openvla_failure.webm" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="column  has-text-centered">
+                    <h5><b>π0</b></h5>
+                    <h5 style="font-size:30px;">❌</h5>
+                    <video autoplay controls muted loop playsinline width="80%">
+                      <source src="static/videos/Compar/sim/1_'put the bowl on the plate'_'turn on the stove'/late/openpi_failure.webm" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+
+</body>
+
+</html>
